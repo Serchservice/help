@@ -3,7 +3,7 @@ import { Axios } from "./Axios";
 const HelpService = {
     loadCategories: async ({ setCategories }) => {
         try {
-            var response = await Axios.get("/help/categories");
+            var response = await Axios.get("/company/help/categories");
             if(response.data["code"] === 200) {
                 setCategories(response.data["data"])
                 return response.data["data"]
@@ -31,7 +31,7 @@ const HelpService = {
 
     loadSections: async ({ category, setSections }) => {
         try {
-            var response = await Axios.get(`/help/sections?key=${ category }`);
+            var response = await Axios.get(`/company/help/sections?key=${ category }`);
             if(response.data["code"] === 200) {
                 setSections(response.data["data"])
                 return true
@@ -45,7 +45,7 @@ const HelpService = {
 
     loadSection: async ({ section, setSection }) => {
         try {
-            var response = await Axios.get(`/help/section?key=${ section }`);
+            var response = await Axios.get(`/company/help/section?key=${ section }`);
             if(response.data["code"] === 200) {
                 setSection(response.data["data"])
                 return true
@@ -59,7 +59,7 @@ const HelpService = {
 
     loadGroups: async ({ category, section, setGroups }) => {
         try {
-            var response = await Axios.get(`/help/groups?category=${ category }&section=${ section }`);
+            var response = await Axios.get(`/company/help/groups?category=${ category }&section=${ section }`);
             if(response.data["code"] === 200) {
                 setGroups(response.data["data"])
                 return true
@@ -73,7 +73,7 @@ const HelpService = {
 
     loadHelp: async ({ id, setHelp }) => {
         try {
-            var response = await Axios.get(`/help?id=${ id }`);
+            var response = await Axios.get(`/company/help?id=${ id }`);
             if(response.data["code"] === 200) {
                 setHelp(response.data["data"])
                 return true
@@ -87,7 +87,7 @@ const HelpService = {
 
     search: async ({ query, setResult }) => {
         try {
-            var response = await Axios.get(`/help/search?q=${ query }`);
+            var response = await Axios.get(`/company/help/search?q=${ query }`);
             if(response.data["code"] === 200) {
                 setResult(response.data["data"])
                 return true
@@ -101,7 +101,7 @@ const HelpService = {
 
     submitQuery: async ({ emailAddress, fullName, comment }) => {
         try {
-            var response = await Axios.post("/help/ask", {
+            var response = await Axios.post("/company/help/ask", {
                 "email_address": emailAddress,
                 "full_name": fullName,
                 "comment": comment
