@@ -11,7 +11,6 @@ const SearchResult = ({ image, header, section, category, link }) => {
                     <div className="search-result-search-result-content">
                         <span className="search-result-search-question">{ header }</span>
                         <span className="search-result-search-category">{ category }</span>
-                        <span className="search-result-search-section">{ section }</span>
                     </div>
                 </div>
                 <Icon icon="solar:arrow-right-broken" className="search-result-search-result-icon" />

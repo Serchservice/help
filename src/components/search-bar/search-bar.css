@@ -78,6 +78,8 @@
     width: 100%;
     margin-top: 10px;
     z-index: 90;
+    max-height: 50vh;
+    overflow: auto;
 }
 
 @media screen and (max-width:768px) {

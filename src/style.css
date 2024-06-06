@@ -83,7 +83,6 @@
     font-style: Medium;
     text-align: left;
     transition: 0.3s;
-    font-family: Poppins;
     font-weight: 500;
     line-height: normal;
     font-stretch: normal;
@@ -145,7 +144,6 @@
 .section-head {
     color: rgb(128, 255, 68);
     font-style: normal;
-    font-family: Poppins;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 2px;
@@ -156,7 +154,6 @@
     color: rgb(255, 255, 255);
     font-size: 40px;
     font-style: normal;
-    font-family: Poppins;
     font-weight: 600;
     line-height: 48px;
 }
@@ -165,7 +162,6 @@
     color: rgb(204, 204, 204);
     width: 100%;
     max-width: 600px;
-    font-family: Poppins;
     line-height: 28px;
 }
 
@@ -233,7 +229,6 @@
     width: 100%;
     font-size: 20px;
     font-style: normal;
-    font-family: Poppins;
     font-weight: 500;
     line-height: 30px;
 }
@@ -242,7 +237,6 @@
     color: rgb(204, 204, 204);
     cursor: pointer;
     font-size: 14px;
-    font-family: Poppins;
     line-height: 21px;
 }
 
@@ -277,7 +271,6 @@
     font-style: normal;
     text-align: left;
     transition: 0.3s;
-    font-family: "Poppins";
     font-weight: 500;
     line-height: 24px;
 }
@@ -350,6 +343,7 @@
     cursor: pointer;
     height: auto;
     display: flex;
+    width: 100%;
     background-color: #fbfbfb;
     padding: var(--dl-space-space-twounits);
     transition: 0.3s;
@@ -367,7 +361,6 @@
 
 .Heading {
     font-size: 32px;
-    font-family: Inter;
     font-weight: 700;
     line-height: 1.15;
     text-transform: none;
@@ -376,7 +369,6 @@
 
 .Content {
     font-size: 16px;
-    font-family: Inter;
     font-weight: 400;
     line-height: 1.15;
     text-transform: none;

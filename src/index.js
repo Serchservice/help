@@ -3,36 +3,58 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import './style.css'
+import './index.css'
+import './not-found.css'
 import reportWebVitals from './reportWebVitals';
 import ScrollToTop from './api/ScrollToTop';
 import Home from './views/home/Home';
 import Links from './config/Links';
-import CategoryPage from './views/category/CategoryPage';
 import Category from './views/category/Category';
+import CategoryView from './views/category/CategoryView';
 import Search from './views/search/Search';
-import SectionPage from './views/section/SectionPage';
-import Section from './views/section/states/Section';
-import Help from './views/section/help/Help';
 import Error from './views/error/Error';
+import { ContentfulClient, ContentfulProvider } from 'react-contentful'
+import Section from './views/section/Section'
+import SectionView from './views/section/SectionView'
+import Help from './views/help/Help'
+import { SnackbarProvider } from 'notistack'
 
 const App = () => {
+    const contentfulClient = new ContentfulClient({
+        accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+        space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    });
+
     return (
-        <Router>
-            <ScrollToTop>
-                <Routes>
-                    <Route element={ <Error /> } path="*" />
-                    <Route element={ <Home /> } exact path={ Links.home } />
-                    <Route element={ <Search /> } path={ Links.search } />
-                    <Route path={ Links.category } element={ <CategoryPage /> }>
-                        <Route index element={ <Category /> }/>
-                        <Route path={ Links.section } element={ <SectionPage /> }>
-                            <Route index element={ <Section /> }/>
-                            <Route path={ Links.faq } element={ <Help /> } />
-                        </Route>
-                    </Route>
-                </Routes>
-            </ScrollToTop>
-        </Router>
+        <>
+            <SnackbarProvider
+                maxSnack={2}
+                iconVariant={{
+                    success: '✅ ',
+                    error: '✖️ ',
+                    warning: '⚠️ ',
+                    info: 'ℹ️ ',
+                }}
+            />
+            <ContentfulProvider client={contentfulClient}>
+                <Router>
+                    <ScrollToTop>
+                        <Routes>
+                            <Route element={ <Error /> } path="*" />
+                            <Route element={ <Home /> } exact path={ Links.home } />
+                            <Route element={ <Search /> } path={ Links.search } />
+                            <Route path={ Links.category } element={ <Category /> }>
+                                <Route index element={ <CategoryView /> }/>
+                                <Route path={ Links.section } element={ <Section /> }>
+                                    <Route index element={ <SectionView /> }/>
+                                    <Route path={ Links.faq } element={ <Help /> } />
+                                </Route>
+                            </Route>
+                        </Routes>
+                    </ScrollToTop>
+                </Router>
+            </ContentfulProvider>
+        </>
     )
 }
 

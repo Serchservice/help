@@ -110,7 +110,6 @@ const Header = () => {
                                 <span className="navbar-interactive-text6">Get Started</span>
                             </div>
                         </div>
-                        <div className="navbar-interactive-buttons"></div>
                         <div className="navbar-interactive-ios button">
                             <img alt="Play Store" src={ Assets.android } className="navbar-interactive-icon3"/>
                             <span className="navbar-interactive-text">Coming soon</span>

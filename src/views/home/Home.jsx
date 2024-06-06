@@ -1,82 +1,99 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet'
+import { useContentful } from 'react-contentful'
 import Footer from '../../components/footer/Footer'
 import './home.css'
 import SearchBar from '../../components/search-bar/SearchBar'
 import Shimmer from '../../components/shimmer/Shimmer'
-import ApiService from '../../api/ApiService';
 import Header from '../../components/header/Header';
 import ItemGenerator from '../../config/ItemGenerator';
-import Assets from '../../assets/Assets';
+import LinkAssets from '../../assets/LinkAssets';
 
 const Home = () => {
-    const [ isLoading, setIsLoading ] = useState(true)
-    const [ categories, setCategories ] = useState([
-        {
-            "category": "",
-            "image": "",
-            "key": ""
-        }
-    ])
+    const { data, error, fetched, loading } = useContentful({ contentType: 'serchHelpFaqCategory' });
+    const [ categories, setCategories ] = useState([ ])
 
     useEffect(() => {
-        ApiService.loadCategories({
-            setIsLoading: setIsLoading,
-            setCategories: setCategories
-        })
-    }, [ ]);
+        if(data && data["items"].length > 0) {
+            console.log(data["items"])
+            const categories = data["items"].map((item) => ({
+                image: item.fields.image,
+                category: item.fields.category,
+                order: item.fields.order,
+                title: item.fields.title,
+            }));
+            categories.sort((a, b) => a.order - b.order);
+            setCategories(categories)
+        }
+    }, [ data ]);
 
-    return (
-        <div className="home-container">
-            <Helmet>
-                <title>Serch | Help Hub</title>
-                <meta
-                    name="description"
-                    content="Find the answer for your questions and queries."
-                />
-                <meta property="og:title" content="Serch | Help Hub" />
-                <meta
-                    property="og:description"
-                    content="We connect you to mechanics, electricians, plumbers and carpenters that are closer to you. Request, Provide, Earn."
-                />
-                <meta property="og:image" content={ Assets.logo } />
-            </Helmet>
-            <Header />
-            <div className="home-body">
-                <div className="home-welcome">
-                    <span className="home-text02">Welcome to Help Hub</span>
-                    <span>{ isLoading
-                        ? "Wait a moment while we fetch content for you..."
-                        : "What can we help you find today?"
-                    }</span>
-                    <div className="home-container2"></div>
-                </div>
-                <div className="home-categories-section">
-                    <div className='home-search-view'>
-                        <SearchBar placeholder={"Search questions, keywords and topics"}/>
+    if (loading || !fetched || error || !data || data["items"].length === 0) {
+        return (
+            <div className="home-container">
+                <Helmet>
+                    <title>Serch | Help Hub</title>
+                    <meta name="description" content="Find the answer for your questions and queries."/>
+                    <meta property="og:title" content="Serch | Help Hub" />
+                    <meta property="og:description" content="Find the answer for your questions and queries."/>
+                    <meta property="og:image" content={ LinkAssets.logo } />
+                </Helmet>
+                <Header />
+                <div className="home-body">
+                    <div className="home-welcome">
+                        <span className="home-text02">Welcome to Help Hub</span>
+                        <span>Wait a moment while we fetch content for you...</span>
+                        <div className="home-container2"></div>
                     </div>
-                    <div className="home-categories">
-                        {
-                            isLoading ? ItemGenerator(length = 5).map((_, key) => {
-                                return (<Shimmer key={ key } height={150} width={150}/>)
-                            }) : categories.map((value, key) => {
-                                return (
-                                    <Link to={`/${ value.key }`} className="home-category-link" key={ key }>
-                                        <div className="hover">
-                                            <img src={ value.image } className='home-category-image'/>
-                                            <span className="home-category-text">{ value.category }</span>
-                                        </div>
-                                    </Link>
-                                )
-                            })
-                        }
+                    <div className="home-categories-section">
+                        <div className='home-search-view'>
+                            <SearchBar placeholder={"Search questions, keywords and topics"}/>
+                        </div>
+                        <div className="home-categories">{ItemGenerator(length = 5).map((_, key) => {
+                            return (<Shimmer key={ key } height={150} width={150}/>)
+                        })}</div>
                     </div>
                 </div>
+                <Footer></Footer>
             </div>
-            <Footer></Footer>
-        </div>
-    )
+        )
+    } else {
+        return (
+            <div className="home-container">
+                <Helmet>
+                    <title>Serch | Help Hub</title>
+                    <meta name="description" content="Find the answer for your questions and queries."/>
+                    <meta property="og:title" content="Serch | Help Hub" />
+                    <meta property="og:description" content="Find the answer for your questions and queries."/>
+                    <meta property="og:image" content={ LinkAssets.logo } />
+                </Helmet>
+                <Header />
+                <div className="home-body">
+                    <div className="home-welcome">
+                        <span className="home-text02">Welcome to Help Hub</span>
+                        <span>What can we help you find today?</span>
+                        <div className="home-container2"></div>
+                    </div>
+                    <div className="home-categories-section">
+                        <div className='home-search-view'>
+                            <SearchBar placeholder={"Search questions, keywords and topics"}/>
+                        </div>
+                        <div className="home-categories">{categories.map((category, key) => {
+                            return (
+                                <Link to={`/${ category.category }`} className="home-category-link" key={ key }>
+                                    <div className="hover">
+                                        <img src={ category.image } alt={ category.title } className='home-category-image'/>
+                                        <span className="home-category-text">{ category.title }</span>
+                                    </div>
+                                </Link>
+                            )
+                        })}</div>
+                    </div>
+                </div>
+                <Footer></Footer>
+            </div>
+        )
+    }
 }
 
 export default Home
