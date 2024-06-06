@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const CategoryPage = () => {
+const SectionView = () => {
     return(
         <>
             <Outlet />
@@ -8,4 +8,4 @@ const CategoryPage = () => {
     );
 }
 
-export default CategoryPage;
+export default SectionView;

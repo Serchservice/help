@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import './help-form.css'
-import HelpService from '../../api/HelpService'
-import { wait } from '@testing-library/user-event/dist/utils'
 import { Icon } from '@iconify/react'
+import { Axios } from '../../api/Axios'
+import Loader from '../Loader'
+import SweetAlert from '../../config/SweetAlert'
 
 const HelpForm = () => {
-    const [ loading, setLoading ] = useState(false)
+    const [ isLoading, setIsLoading ] = useState(false)
     const [ isOpen, setIsOpen ] = useState(false)
-    const [ message, setMessage ] = useState("")
-
     const [ emailAddress, setEmailAddress ] = useState("")
     const [ fullName, setFullName ] = useState("")
     const [ comment, setComment ] = useState("")
@@ -16,30 +15,39 @@ const HelpForm = () => {
     const submitForm = async (event) => {
         event.preventDefault()
 
-        if(loading) {
+        if(isLoading) {
             return
         } else if(comment === "") {
-            setMessage("Comment is needed")
-            await wait(2000)
-            setMessage("")
-            return
+            SweetAlert("State your complaint", 'info')
+        } else if(fullName.split(" ").length != 2) {
+            SweetAlert("Separate your full name with a space like: John Doe", 'info')
         } else {
-            setLoading(true)
-            var response = await HelpService.submitQuery({
-                emailAddress: emailAddress,
-                fullName: fullName,
-                comment: comment
-            })
-            setLoading(false)
-            if(response) {
-                setMessage("Query submitted")
-                await wait(2000)
-                setMessage("")
-            } else {
-                setMessage("Error occurred. Try again")
-                await wait(2000)
-                setMessage("")
-            }
+            setIsLoading(true)
+            await Axios.post("/company/complaint/complain", {
+                    "email_address": emailAddress,
+                    "first_name": fullName.split(" ")[0],
+                    "last_name": fullName.split(" ")[1],
+                    "comment": comment
+                })
+                .then((response) => {
+                    setIsLoading(false)
+                    if(response.data["code"] === 200 || response.data["code"] === 201) {
+                        SweetAlert(response.data["message"], "success")
+                        setEmailAddress("")
+                        setFullName("")
+                        setComment("")
+                    } else {
+                        SweetAlert(response.data["message"], "error")
+                    }
+                })
+                .catch((error) => {
+                    setIsLoading(false)
+                    if(error?.code === "ERR_NETWORK") {
+                        SweetAlert("Network error. Please check your internet connection", "error")
+                    } else {
+                        SweetAlert(error, "error")
+                    }
+                })
         }
     }
 
@@ -103,12 +111,14 @@ const HelpForm = () => {
                     id="more"
                     name="Anything else we would need to know"
                     autoComplete="on"
+                    rows="10"
+                    required={ true }
                     className="help-form-textarea"
                     onChange={(e) => setComment(e.target.value)}
                 ></textarea>
-                <button type="submit" className="help-form-button">{
-                    loading ? "..." : message !== "" ? message : "Submit"
-                }</button>
+                <button type="submit" className="help-form-button">
+                    {isLoading ? <Loader width={60}/> : <span className="help-form-button-text">Submit</span>}
+                </button>
             </form>
         </div>
     )

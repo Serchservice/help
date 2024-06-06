@@ -80,6 +80,7 @@
 .help-form-textarea:focus {
     outline: none;
     border-color: #030001;
+    border-width: 2px;
 }
 
 .help-form-button {
@@ -90,6 +91,10 @@
     border-radius: 10px;
     background-color: #030001;
     cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .help-form-container-header {
@@ -104,6 +109,16 @@
     padding: 6px;
     cursor: pointer;
     background-color: #f4f4f4;
+}
+
+.help-form-button-text {
+    color: var(--dl-color-gray-white);
+    display: flex;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
 }
 
 @media(max-width: 600px) {

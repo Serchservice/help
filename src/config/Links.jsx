@@ -2,7 +2,7 @@ const Links = {
     home: "/",
     category: ":category",
     section: ":section",
-    faq: ":group/:id",
+    faq: ":group/:faq",
     search: "/search",
 
     /// Other Links

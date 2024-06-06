@@ -2,34 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import "./dropdown-menu.css";
 
-function DropdownMenu({
-    placeHolder = '',
-    list = [{
-        "category": "",
-        "image": "",
-        "key": ""
-    }],
-    isSearchable = false
-}) {
+function DropdownMenu({text = '', list = [{"title": "", "category": ""}]}) {
     const [ open, setOpen ] = useState(false);
-    const [ text, setText ] = useState(placeHolder);
-    const [ index, setIndex ] = useState(-1);
-    const [ search, setSearch ] = useState('');
+    const [ index, setIndex ] = useState(-1)
     const dropdownRef = useRef(null);
 
     const handleOpenList = () => {
         setOpen(!open);
-    }
-
-    const handleSelect = (item = {
-        "category": "",
-        "image": "",
-        "key": ""
-    }) => {
-        setText(item.category);
-        setSearch("");
-        // onSelected(item);
-        setOpen(false);
     }
 
     const handleHover = (key) => {
@@ -43,10 +22,6 @@ function DropdownMenu({
         fontSize: "14px",
         fontWeight: "500"
     }
-
-    const filteredList = isSearchable ? list.filter((item) => {
-        return item.category.toLowerCase().includes(search.toLowerCase());
-    }) : list;
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -64,7 +39,7 @@ function DropdownMenu({
     return (
         <div className="dropdown-menu" ref={dropdownRef}>
             <div onClick={handleOpenList} className="dropdown-toggle">
-                {text}
+                { text }
                 <div className={`dropdown-icon ${open ? 'rotate-180' : ''}`}>
                     <Icon icon="lucide:chevron-down" width="18" height="18" />
                 </div>
@@ -72,24 +47,14 @@ function DropdownMenu({
             {
                 open && (
                     <div className="dropdown-list">
-                        {isSearchable && (
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                className="dropdown-input"
-                            />
-                        )}
-                        {filteredList.map((item, key) => (
+                        {list.map((item, key) => (
                             <a
                                 key={key}
-                                href={ `/${ item.key }` }
+                                href={ `/${ item.category }` }
                                 onMouseEnter={() => handleHover(key)}
-                                onClick={() => handleSelect(item)}
                                 className="dropdown-item"
                                 style={index === key ? hoverStyle : { fontSize: "14px", fontWeight: "500" }}
-                            >{ item.category }</a>
+                            >{ item.title }</a>
                         ))}
                     </div>
                 )
