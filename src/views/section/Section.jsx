@@ -174,7 +174,7 @@ const Section = () => {
                             transform: isOptionsOpen ? "translateX(0%)" : "translateX(100%)",
                             display: isOptionsOpen ? "flex" : "none",
                             backgroundColor: "#ffffff",
-                            zIndex: "99"
+                            zIndex: "90"
                         }}>
                             <div className="navbar-interactive-nav">
                                 <div className="navbar-interactive-top">
