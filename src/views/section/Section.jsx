@@ -29,6 +29,7 @@ const Section = () => {
         "section": "",
         "groups": []
     })
+    const [ title, setTitle ] = useState(section)
     const [ isOptionsOpen, setIsOptionsOpen ] = useState(false)
 
     const toggleNav = () => {
@@ -52,7 +53,6 @@ const Section = () => {
                         faqs: g.fields.faqs && g.fields.faqs.map((f) => ({
                             title: f.fields.title,
                             faq: f.fields.faq,
-                            answer: f.fields.answer,
                         }))
                     }))
                 }))
@@ -71,15 +71,27 @@ const Section = () => {
             setActiveSection(activeSection);
         }
     }, [ activeCategory, section ]);
+    
+    useEffect(() => {
+        if(faq !== undefined && faq !== '' && faq !== null) {
+            if (activeSection && activeSection.groups && activeSection.groups.length > 0) {
+                const activeGroup = activeSection.groups.find((g) => g.group === group);
+                if (activeGroup && activeGroup.faqs && activeGroup.faqs.length > 0) {
+                    const activeFaq = activeGroup.faqs.find((f) => f.faq === faq);
+                    setTitle(activeFaq.title);
+                }
+            }
+        }
+    }, [ ]);       
 
     if (loading || !fetched) {
         return (
             <div className="section-container">
                 <Helmet>
-                    <title>{ `Serch Help Hub | ${ section }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ section }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ section }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ section }` } />
+                    <title>{ `Serch Help Hub | ${ title }` }</title>
+                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
+                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
+                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
                 <Header />
@@ -120,10 +132,10 @@ const Section = () => {
         return (
             <div className="section-container">
                 <Helmet>
-                    <title>{ `Serch Help Hub | ${ section }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ section }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ section }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ section }` } />
+                    <title>{ `Serch Help Hub | ${ title }` }</title>
+                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
+                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
+                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
                 <Header />
@@ -148,10 +160,10 @@ const Section = () => {
         return (
             <div className="section-container">
                 <Helmet>
-                    <title>{ `Serch Help Hub | ${ activeSection.title }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ activeSection.title }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ activeSection.title }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ activeSection.title }` } />
+                    <title>{ `Serch Help Hub | ${ title }` }</title>
+                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
+                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
+                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
                 <Header />
