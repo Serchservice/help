@@ -148,10 +148,10 @@ const Section = () => {
         return (
             <div className="section-container">
                 <Helmet>
-                    <title>{ `Serch Help Hub | ${ activeSection.section }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ activeSection.section }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ activeSection.section }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ activeSection.section }` } />
+                    <title>{ `Serch Help Hub | ${ activeSection.title }` }</title>
+                    <meta name="description" content={ `Explore question and answers in ${ activeSection.title }` } />
+                    <meta property="og:title" content={ `Serch Help Hub | ${ activeSection.title }` } />
+                    <meta property="og:description" content={ `Explore question and answers in ${ activeSection.title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
                 <Header />
