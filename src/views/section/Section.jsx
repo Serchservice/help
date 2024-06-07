@@ -71,7 +71,7 @@ const Section = () => {
             setActiveSection(activeSection);
         }
     }, [ activeCategory, section ]);
-    
+
     useEffect(() => {
         if(faq !== undefined && faq !== '' && faq !== null) {
             if (activeSection && activeSection.groups && activeSection.groups.length > 0) {
@@ -82,7 +82,20 @@ const Section = () => {
                 }
             }
         }
-    }, [ ]);       
+    }, [ ]);
+
+    useEffect(() => {
+        if (isOptionsOpen) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Cleanup function to remove the class when the component is unmounted
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        };
+    }, [isOptionsOpen]);
 
     if (loading || !fetched) {
         return (

@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import { Axios } from '../../api/Axios'
 import Loader from '../Loader'
 import SweetAlert from '../../config/SweetAlert'
+import Spacer from '../Spacer'
 
 const HelpForm = () => {
     const [ isLoading, setIsLoading ] = useState(false)
@@ -56,74 +57,75 @@ const HelpForm = () => {
     }
 
     return (
-        <div className="help-form-container" style={{
-            height: isOpen ? "auto" : "53px",
-        }}>
-            <div className='help-form-container-header'>
-                <p>Having Issue? Let us know here</p>
-                <Icon
-                    icon={ isOpen ? "pajamas:close" : "octicon:discussion-closed-24" }
-                    height={ 28 }
-                    width={ 28 }
-                    className='help-form-container-header-icon'
-                    onClick={toggle}
-                />
-            </div>
-            <form
-                id="helpForm"
-                name="Help Form"
-                autoComplete="on"
-                method="submit"
-                className="help-form-form"
-                onSubmit={submitForm}
-                style={{
-                    display: isOpen ? "flex" : "none",
-                }}
-            >
-                <span className="help-form-full-name">
-                    <span>First and Last Name</span>
-                    <br></br>
-                </span>
-                <input
-                    type="text"
-                    placeholder="Enter your full name"
-                    required={ true }
-                    id="fullName"
-                    name="Full Name"
-                    autoComplete="name"
-                    value={ fullName }
-                    className="help-form-textinput"
-                    onChange={(e) => setFullName(e.target.value)}
-                />
-                <span className="help-form-email-address">Email Address where support can contact you</span>
-                <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    required={ true }
-                    id="emailAddress"
-                    name="Email Address"
-                    autoComplete="email"
-                    value={ emailAddress }
-                    className="help-form-textinput1"
-                    onChange={(e) => setEmailAddress(e.target.value)}
-                />
-                <span className="help-form-comment">Anything you would like us to know</span>
-                <textarea
-                    placeholder="Let your voice be heard and your problem solved"
-                    id="more"
-                    name="Anything else we would need to know"
+        <>
+            <div className="help-form-container" style={{height: isOpen ? "auto" : "53px"}}>
+                <div className='help-form-container-header'>
+                    <p>Having Issue? Let us know here</p>
+                    <Icon
+                        icon={ isOpen ? "pajamas:close" : "octicon:discussion-closed-24" }
+                        height={ 28 }
+                        width={ 28 }
+                        className='help-form-container-header-icon'
+                        onClick={toggle}
+                    />
+                </div>
+                <form
+                    id="helpForm"
+                    name="Help Form"
                     autoComplete="on"
-                    rows="10"
-                    required={ true }
-                    value={ comment }
-                    className="help-form-textarea"
-                    onChange={(e) => setComment(e.target.value)}
-                ></textarea>
-                <button type="submit" className="help-form-button">
-                    {isLoading ? <Loader width={60}/> : <span className="help-form-button-text">Submit</span>}
-                </button>
-            </form>
-        </div>
+                    method="submit"
+                    className="help-form-form"
+                    onSubmit={submitForm}
+                    style={{
+                        display: isOpen ? "flex" : "none",
+                    }}
+                >
+                    <span className="help-form-full-name">
+                        <span>First and Last Name</span>
+                        <br></br>
+                    </span>
+                    <input
+                        type="text"
+                        placeholder="Enter your full name"
+                        required={ true }
+                        id="fullName"
+                        name="Full Name"
+                        autoComplete="name"
+                        value={ fullName }
+                        className="help-form-textinput"
+                        onChange={(e) => setFullName(e.target.value)}
+                    />
+                    <span className="help-form-email-address">Email Address where support can contact you</span>
+                    <input
+                        type="email"
+                        placeholder="Enter your email address"
+                        required={ true }
+                        id="emailAddress"
+                        name="Email Address"
+                        autoComplete="email"
+                        value={ emailAddress }
+                        className="help-form-textinput1"
+                        onChange={(e) => setEmailAddress(e.target.value)}
+                    />
+                    <span className="help-form-comment">Anything you would like us to know</span>
+                    <textarea
+                        placeholder="Let your voice be heard and your problem solved"
+                        id="more"
+                        name="Anything else we would need to know"
+                        autoComplete="on"
+                        rows="10"
+                        required={ true }
+                        value={ comment }
+                        className="help-form-textarea"
+                        onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                    <button type="submit" className="help-form-button">
+                        {isLoading ? <Loader width={60}/> : <span className="help-form-button-text">Submit</span>}
+                    </button>
+                </form>
+            </div>
+            { isOpen && <Spacer height={200}/> }
+        </>
     )
 }
 
