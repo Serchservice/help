@@ -195,7 +195,7 @@ const Section = () => {
                             }
                         </div>
                         <Spacer height={"30px"} />
-                        <div data-thq="thq-mobile-menu" className="navbar-interactive-mobile-menu" style={{
+                        <div data-thq="thq-mobile-menu" className="navbar-interactive-mobile-menu-content" style={{
                             transform: isOptionsOpen ? "translateX(0%)" : "translateX(100%)",
                             display: isOptionsOpen ? "flex" : "none",
                             backgroundColor: "#ffffff",
