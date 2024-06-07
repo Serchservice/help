@@ -127,7 +127,7 @@
         width: 100%;
         height: auto;
         position: absolute;
-        z-index: 1000;
+        z-index: 90;
         max-height: none;
         min-height: auto;
         border-width: 0;
