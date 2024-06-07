@@ -91,6 +91,7 @@ const HelpForm = () => {
                     id="fullName"
                     name="Full Name"
                     autoComplete="name"
+                    value={ fullName }
                     className="help-form-textinput"
                     onChange={(e) => setFullName(e.target.value)}
                 />
@@ -102,6 +103,7 @@ const HelpForm = () => {
                     id="emailAddress"
                     name="Email Address"
                     autoComplete="email"
+                    value={ emailAddress }
                     className="help-form-textinput1"
                     onChange={(e) => setEmailAddress(e.target.value)}
                 />
@@ -113,6 +115,7 @@ const HelpForm = () => {
                     autoComplete="on"
                     rows="10"
                     required={ true }
+                    value={ comment }
                     className="help-form-textarea"
                     onChange={(e) => setComment(e.target.value)}
                 ></textarea>
