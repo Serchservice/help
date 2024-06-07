@@ -225,7 +225,7 @@ const Section = () => {
                                 })}</div>
                                 <Spacer height={50}/>
                                 <HelpForm />
-                                <Spacer height={"30px"} />
+                                <Spacer height={50} />
                             </div>
                         </div>
                         <div className='section-body-left-search'>
