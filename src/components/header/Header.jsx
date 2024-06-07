@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './header.css'
 import Assets from '../../assets/Assets'
 import { Link } from 'react-router-dom'
 import Links from '../../config/Links'
 
 const Header = () => {
-    const [ open, setOpen ] = useState(false)
+    const [open, setOpen] = useState(false)
     const topLinks = [
         {
             "link": Links.aboutUs,
@@ -44,11 +44,24 @@ const Header = () => {
         setOpen(!open)
     }
 
+    useEffect(() => {
+        if (open) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Cleanup function to remove the class when the component is unmounted
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        };
+    }, [open]);
+
     return (
         <div className={"navbar-interactive-container"}>
             <header data-thq="thq-navbar" className="navbar-interactive-navbar-interactive">
-                <a href={ Links.serch } className="navbar-interactive-link">
-                    <img alt="Serch" src={ Assets.lightLogo1500 } className="navbar-interactive-image mouse" />
+                <a href={Links.serch} className="navbar-interactive-link">
+                    <img alt="Serch" src={Assets.lightLogo1500} className="navbar-interactive-image mouse" />
                 </a>
                 <div data-thq="thq-navbar-nav" className="navbar-interactive-desktop-menu">
                     <div className="navbar-interactive-nav-content">
@@ -60,8 +73,8 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                <div data-thq="thq-burger-menu" className="navbar-interactive-burger-menu get-started" onClick={ toggleMobileMenu }>
-                    <img alt="menu" src={ Assets.menuIcon } className="navbar-interactive-image2"/>
+                <div data-thq="thq-burger-menu" className="navbar-interactive-burger-menu get-started" onClick={toggleMobileMenu}>
+                    <img alt="menu" src={Assets.menuIcon} className="navbar-interactive-image2" />
                 </div>
                 <div data-thq="thq-mobile-menu" className="navbar-interactive-mobile-menu" style={{
                     transform: open ? "translateX(0%)" : "translateX(100%)",
@@ -69,8 +82,8 @@ const Header = () => {
                 }}>
                     <div className="navbar-interactive-nav">
                         <div className="navbar-interactive-top">
-                            <img alt="Serch" src={ Assets.lightLogo1500 } className="navbar-interactive-logo"/>
-                            <div data-thq="thq-close-menu" className="navbar-interactive-close-menu" onClick={ toggleMobileMenu }>
+                            <img alt="Serch" src={Assets.lightLogo1500} className="navbar-interactive-logo" />
+                            <div data-thq="thq-close-menu" className="navbar-interactive-close-menu" onClick={toggleMobileMenu}>
                                 <svg viewBox="0 0 1024 1024" className="navbar-interactive-icon">
                                     <path
                                         d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
@@ -83,9 +96,9 @@ const Header = () => {
                             {
                                 topLinks.map((value, key) => {
                                     return (
-                                        <Link to={ value.link } key={ key }>
+                                        <Link to={value.link} key={key}>
                                             <span className="navbar-interactive-text1 footer-link">
-                                                { value.name }
+                                                {value.name}
                                             </span>
                                         </Link>
                                     )
@@ -97,9 +110,9 @@ const Header = () => {
                                 {
                                     bottomLinks.map((value, key) => {
                                         return (
-                                            <Link to={ value.link } key={ key }>
+                                            <Link to={value.link} key={key}>
                                                 <span className="nav-link navbar-interactive-link2">
-                                                    { value.name }
+                                                    {value.name}
                                                 </span>
                                             </Link>
                                         )
@@ -111,11 +124,11 @@ const Header = () => {
                             </div>
                         </div>
                         <div className="navbar-interactive-ios button">
-                            <img alt="Play Store" src={ Assets.android } className="navbar-interactive-icon3"/>
+                            <img alt="Play Store" src={Assets.android} className="navbar-interactive-icon3" />
                             <span className="navbar-interactive-text">Coming soon</span>
                         </div>
                         <div className="navbar-interactive-android button">
-                            <img alt="Apple Store" src={ Assets.apple } className="navbar-interactive-icon3"/>
+                            <img alt="Apple Store" src={Assets.apple} className="navbar-interactive-icon3" />
                             <span className="navbar-interactive-text">Coming soon</span>
                         </div>
                     </div>

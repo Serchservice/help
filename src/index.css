@@ -25,6 +25,10 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+body.overflow-hidden {
+    overflow: hidden;  /* Hide overflow when the child is visible */
+}
+
 p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption {
     margin: 0;
     padding: 0;

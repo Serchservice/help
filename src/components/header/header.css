@@ -81,6 +81,7 @@
     position: absolute;
     transition: 0.5s;
     flex-direction: column;
+    overflow: auto;
     justify-content: space-between;
     background-color: #fff;
 }
