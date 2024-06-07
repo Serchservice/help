@@ -83,7 +83,6 @@
     flex-direction: column;
     justify-content: space-between;
     background-color: #fff;
-    overflow: auto;
 }
 
 .navbar-interactive-nav {
