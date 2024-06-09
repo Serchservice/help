@@ -6,6 +6,7 @@ import Links from "../../config/Links";
 import SearchResult from "../search-result/SearchResult";
 import Spacer from "../Spacer";
 import { ContentfulClient } from "react-contentful";
+import Keys from "../../api/Keys";
 
 const SearchBar = ({ placeholder }) => {
     const [query, setQuery] = useState("")
@@ -22,8 +23,8 @@ const SearchBar = ({ placeholder }) => {
     }
 
     const client = new ContentfulClient({
-        accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-        space: process.env.REACT_APP_CONTENTFUL_SPACE,
+        accessToken: Keys.contentfulToken,
+        space: Keys.contentfulSpace,
     });
 
     const search = async (query) => {

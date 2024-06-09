@@ -14,6 +14,7 @@ import ItemGenerator from '../../config/ItemGenerator'
 import Shimmer from '../../components/shimmer/Shimmer'
 import LinkAssets from '../../assets/LinkAssets'
 import { ContentfulClient } from 'react-contentful'
+import Keys from '../../api/Keys'
 
 const Search = () => {
     const location = useLocation()
@@ -23,8 +24,8 @@ const Search = () => {
     const [ isLoading, setIsLoading ] = useState(true)
 
     const client = new ContentfulClient({
-        accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-        space: process.env.REACT_APP_CONTENTFUL_SPACE,
+        accessToken: Keys.contentfulToken,
+        space: Keys.contentfulSpace,
     });
 
     useEffect(() => {

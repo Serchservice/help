@@ -1,7 +1,8 @@
 import axios from 'axios';
+import Keys from './Keys';
 
 const Axios = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: Keys.baseUrl,
     headers: {
         'Content-Type': 'application/json',
     },
