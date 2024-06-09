@@ -18,11 +18,12 @@ import Section from './views/section/Section'
 import SectionView from './views/section/SectionView'
 import Help from './views/help/Help'
 import { SnackbarProvider } from 'notistack'
+import Keys from './api/Keys'
 
 const App = () => {
     const contentfulClient = new ContentfulClient({
-        accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-        space: process.env.REACT_APP_CONTENTFUL_SPACE,
+        accessToken: Keys.contentfulToken,
+        space: Keys.contentfulSpace,
     });
 
     return (
