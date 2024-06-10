@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useContentful } from 'react-contentful'
 import './section.css'
@@ -17,6 +17,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import GroupItem from '../../components/group-item/GroupItem'
 
 const Section = () => {
+    const headerRef = useRef(null);
     const { category, section, faq } = useParams()
     const [ categories, setCategories ] = useState([ ])
     const [ activeCategory, setActiveCategory ] = useState({
@@ -31,6 +32,16 @@ const Section = () => {
     })
     const [ title, setTitle ] = useState(section)
     const [ isOptionsOpen, setIsOptionsOpen ] = useState(false)
+    const [ contentHeaderHeight, setContentHeaderHeight ] = useState("90vh")
+
+    useEffect(() => {
+        if (headerRef.current) {
+            console.log(headerRef.current.getBoundingClientRect().height)
+            const headerHeight = headerRef.current.getBoundingClientRect().height;
+            const newHeight = 100 - headerHeight / window.innerHeight * 100;
+            setContentHeaderHeight(`${ newHeight }vh`);
+        }
+    }, []);
 
     const toggleNav = () => {
         setIsOptionsOpen(!isOptionsOpen)
@@ -107,7 +118,7 @@ const Section = () => {
                     <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
-                <Header />
+                <Header reference={ headerRef } />
                 <div className='section-body'>
                     <div className='section-body-left'>
                         <div className='section-body-left-header'>
@@ -151,7 +162,7 @@ const Section = () => {
                     <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
-                <Header />
+                <Header reference={ headerRef } />
                 <img alt="Error" src={ LinkAssets.error } className="error-image" />
                 <div className="error-body">
                     <h1 className="error-text">An error occurred while trying to find the support you were looking for</h1>
@@ -179,7 +190,7 @@ const Section = () => {
                     <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
                     <meta property="og:image" content={ LinkAssets.logo } />
                 </Helmet>
-                <Header />
+                <Header reference={ headerRef } />
                 <div className='section-body'>
                     <div className='section-body-left'>
                         <div className='section-body-left-header'>
@@ -199,7 +210,8 @@ const Section = () => {
                             transform: isOptionsOpen ? "translateX(0%)" : "translateX(100%)",
                             display: isOptionsOpen ? "flex" : "none",
                             backgroundColor: "#ffffff",
-                            zIndex: "90"
+                            zIndex: "90",
+                            height: contentHeaderHeight
                         }}>
                             <div className="navbar-interactive-nav">
                                 <div className="navbar-interactive-top">
@@ -225,7 +237,6 @@ const Section = () => {
                                 })}</div>
                                 <Spacer height={50}/>
                                 <HelpForm />
-                                <Spacer height={50} />
                             </div>
                         </div>
                         <div className='section-body-left-search'>
