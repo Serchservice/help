@@ -4,7 +4,7 @@ import Assets from '../../assets/Assets'
 import { Link } from 'react-router-dom'
 import Links from '../../config/Links'
 
-const Header = () => {
+const Header = ({ reference }) => {
     const [open, setOpen] = useState(false)
     const topLinks = [
         {
@@ -58,7 +58,7 @@ const Header = () => {
     }, [open]);
 
     return (
-        <div className={"navbar-interactive-container"}>
+        <div className={"navbar-interactive-container"} ref={ reference }>
             <header data-thq="thq-navbar" className="navbar-interactive-navbar-interactive">
                 <a href={Links.serch} className="navbar-interactive-link">
                     <img alt="Serch" src={Assets.lightLogo1500} className="navbar-interactive-image mouse" />
