@@ -85,6 +85,7 @@
     padding: var(--dl-space-space-unit);
     align-items: flex-start;
     flex-direction: column;
+    overflow: auto;
     border-color: var(--dl-color-gray-black);
     border-width: 0 0 0 2px;
 }
