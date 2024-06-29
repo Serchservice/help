@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet'
 import { useContentful } from 'react-contentful'
 import Footer from '../../components/footer/Footer'
 import './home.css'
@@ -8,7 +7,7 @@ import SearchBar from '../../components/search-bar/SearchBar'
 import Shimmer from '../../components/shimmer/Shimmer'
 import Header from '../../components/header/Header';
 import ItemGenerator from '../../config/ItemGenerator';
-import LinkAssets from '../../assets/LinkAssets';
+import Title from '../../config/Title';
 
 const Home = () => {
     const { data, error, fetched, loading } = useContentful({ contentType: 'serchHelpFaqCategory' });
@@ -31,13 +30,7 @@ const Home = () => {
     if (loading || !fetched || error || !data || data["items"].length === 0) {
         return (
             <div className="home-container">
-                <Helmet>
-                    <title>Serch | Help Hub</title>
-                    <meta name="description" content="Find the answer for your questions and queries."/>
-                    <meta property="og:title" content="Serch | Help Hub" />
-                    <meta property="og:description" content="Find the answer for your questions and queries."/>
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title="Home" description="Find the answer for your questions and queries" />
                 <Header />
                 <div className="home-body">
                     <div className="home-welcome">
@@ -60,13 +53,7 @@ const Home = () => {
     } else {
         return (
             <div className="home-container">
-                <Helmet>
-                    <title>Serch | Help Hub</title>
-                    <meta name="description" content="Find the answer for your questions and queries."/>
-                    <meta property="og:title" content="Serch | Help Hub" />
-                    <meta property="og:description" content="Find the answer for your questions and queries."/>
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title="Home" description="Find the answer for your questions and queries" />
                 <Header />
                 <div className="home-body">
                     <div className="home-welcome">

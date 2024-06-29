@@ -15,6 +15,7 @@ import Shimmer from '../../components/shimmer/Shimmer'
 import LinkAssets from '../../assets/LinkAssets'
 import { ContentfulClient } from 'react-contentful'
 import Keys from '../../api/Keys'
+import Title from '../../config/Title'
 
 const Search = () => {
     const location = useLocation()
@@ -128,13 +129,7 @@ const Search = () => {
     if (isLoading) {
         return (
             <div className="search-container">
-                <Helmet>
-                    <title>Serch Help Hub | Search Results</title>
-                    <meta name="description" content={`Search results for ${query}`} />
-                    <meta property="og:title" content="Serch (Search Results) - Service made easy" />
-                    <meta property="og:description" content={`Search results for ${query}`} />
-                    <meta property="og:image" content={LinkAssets.logo} />
-                </Helmet>
+                <Title title="Search Results" description={`Search results for ${query}`} />
                 <Header />
                 <div className="search-body">
                     <div className="search-header">
@@ -186,13 +181,7 @@ const Search = () => {
     } else if (result.length === 0) {
         return (
             <div className="search-container">
-                <Helmet>
-                    <title>Serch Help Hub | Search Results</title>
-                    <meta name="description" content={`Search results for ${query}`} />
-                    <meta property="og:title" content="Serch (Search Results) - Service made easy" />
-                    <meta property="og:description" content={`Search results for ${query}`} />
-                    <meta property="og:image" content={LinkAssets.logo} />
-                </Helmet>
+                <Title title="Search Results" description={`Search results for ${query}`} />
                 <Header />
                 <div className="search-body">
                     <div className="search-header">
