@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet'
 import { useContentful } from 'react-contentful'
 import './category.css'
 import Footer from '../../components/footer/Footer'
@@ -17,6 +16,7 @@ import DownloadBusinessApp from '../../components/app-download/DownloadBusinessA
 import DownloadProviderApp from '../../components/app-download/DownloadProviderApp'
 import DownloadUserApp from '../../components/app-download/DownloadUserApp'
 import Spacer from '../../components/Spacer'
+import Title from '../../config/Title'
 
 const CategoryView = () => {
     const { category } = useParams()
@@ -50,13 +50,7 @@ const CategoryView = () => {
     if (loading || !fetched) {
         return (
             <div className="category-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${ category }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ category }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ category }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ category }` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ category } description={`Explore question and answers in ${ category }`} />
                 <Header />
                 <div className="category-body">
                     <div className="category-header">
@@ -84,13 +78,7 @@ const CategoryView = () => {
     } else if (error || !data || data["items"].length === 0 || active === undefined) {
         return (
             <div className="category-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${ category }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ category }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ category }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ category }` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ category } description={`Explore question and answers in ${ category }`} />
                 <Header />
                 <img alt="Error" src={ LinkAssets.error } className="error-image" />
                 <div className="error-body">
@@ -112,13 +100,7 @@ const CategoryView = () => {
     } else {
         return (
             <div className="category-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${active.title}` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${active.title}` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${active.title}` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${active.title}` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ active.title } description={`Explore question and answers in ${ active.title }`} />
                 <Header />
                 <div className="category-body">
                     <div className="category-header">

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Helmet } from 'react-helmet'
 import { useContentful } from 'react-contentful'
 import './section.css'
 import Footer from '../../components/footer/Footer'
@@ -15,6 +14,7 @@ import HelpForm from '../../components/help-form/HelpForm'
 import DropdownMenu from '../../components/dropdown-menu/DropdownMenu'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import GroupItem from '../../components/group-item/GroupItem'
+import Title from '../../config/Title'
 
 const Section = () => {
     const headerRef = useRef(null);
@@ -111,13 +111,7 @@ const Section = () => {
     if (loading || !fetched) {
         return (
             <div className="section-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${ title }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ title } description={`Explore question and answers in ${ title }`} />
                 <Header reference={ headerRef } />
                 <div className='section-body'>
                     <div className='section-body-left'>
@@ -155,13 +149,7 @@ const Section = () => {
     } else if (error || !data || data["items"].length === 0 || activeCategory === undefined || activeSection === undefined) {
         return (
             <div className="section-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${ title }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ title } description={`Explore question and answers in ${ title }`} />
                 <Header reference={ headerRef } />
                 <img alt="Error" src={ LinkAssets.error } className="error-image" />
                 <div className="error-body">
@@ -183,13 +171,7 @@ const Section = () => {
     } else {
         return (
             <div className="section-container">
-                <Helmet>
-                    <title>{ `Serch Help Hub | ${ title }` }</title>
-                    <meta name="description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:title" content={ `Serch Help Hub | ${ title }` } />
-                    <meta property="og:description" content={ `Explore question and answers in ${ title }` } />
-                    <meta property="og:image" content={ LinkAssets.logo } />
-                </Helmet>
+                <Title title={ title } description={`Explore question and answers in ${ title }`} />
                 <Header reference={ headerRef } />
                 <div className='section-body'>
                     <div className='section-body-left'>
