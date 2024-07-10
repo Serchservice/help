@@ -15,7 +15,6 @@ const Home = () => {
 
     useEffect(() => {
         if(data && data["items"].length > 0) {
-            console.log(data["items"])
             const categories = data["items"].map((item) => ({
                 image: item.fields.image,
                 category: item.fields.category,
