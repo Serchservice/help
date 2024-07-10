@@ -8,10 +8,12 @@ import ItemGenerator from "../../config/ItemGenerator";
 import LinkAssets from "../../assets/LinkAssets";
 import Links from "../../config/Links";
 import ContentRender from "../../components/contentful/ContentRender";
+import Utils from "../../utils/Utils";
+import Title from "../../config/Title";
 
 const Help = () => {
     const { category, section, group, faq } = useParams()
-    const [ content, setContent ] = useState()
+    const [content, setContent] = useState()
 
     const { data, error, fetched, loading } = useContentful({ contentType: 'serchHelpFaqCategory' });
     useEffect(() => {
@@ -48,21 +50,21 @@ const Help = () => {
                 }
             }
         }
-    }, [ data, category ]);
+    }, [data, category]);
 
     if (loading || !fetched) {
         return (
             <div style={{ width: "100%" }}>
-                <Shimmer height={40} percentWidth="85%"/>
-                <Spacer height={"15px"}/>
-                <Shimmer height={40} percentWidth="60%"/>
-                <Spacer height={"60px"}/>
+                <Shimmer height={40} percentWidth="85%" />
+                <Spacer height={"15px"} />
+                <Shimmer height={40} percentWidth="60%" />
+                <Spacer height={"60px"} />
                 {
-                    ItemGenerator({length: 10}).map((_, key) => {
+                    ItemGenerator({ length: 10 }).map((_, key) => {
                         return (
-                            <div key={ key }>
-                                <Shimmer height={18} percentWidth="100%"/>
-                                <Spacer height={"8px"}/>
+                            <div key={key}>
+                                <Shimmer height={18} percentWidth="100%" />
+                                <Spacer height={"8px"} />
                             </div>
                         )
                     })
@@ -72,10 +74,10 @@ const Help = () => {
     } else if (error || !data || data["items"].length === 0 || content === undefined) {
         return (
             <div style={{ width: "100%" }}>
-                <img alt="Error" src={ LinkAssets.error } className="error-image" />
+                <img alt="Error" src={LinkAssets.error} className="error-image" />
                 <div className="error-body">
                     <h1 className="error-text">An error occurred while trying to find the support you were looking for</h1>
-                    <Link to={ Links.home } className="error-navlink">
+                    <Link to={Links.home} className="error-navlink">
                         <div data-role="accordion-container" className="error-element accordion-element">
                             <div className="error-details">
                                 <span className="error-text1"> Head to home </span>
@@ -86,7 +88,7 @@ const Help = () => {
                         </div>
                     </Link>
                 </div>
-                <div style={{height: "100px"}}></div>
+                <div style={{ height: "100px" }}></div>
             </div>
         )
     } else if (content === null) {
@@ -99,9 +101,14 @@ const Help = () => {
             width: "100%"
         }}>No content yet</div>
     } else {
-        return <div className="help-content-body">
-            <ContentRender content={ content }/>
-        </div>
+        return (
+            <>
+                <Title title={ Utils.capitalizeFirstLetter(faq) } description={`Explore question and answers in ${ faq }`} />
+                <div className="help-content-body">
+                    <ContentRender content={content} />
+                </div>
+            </>
+        )
     }
 }
 
