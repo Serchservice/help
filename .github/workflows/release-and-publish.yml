@@ -1,0 +1,96 @@
+name: Release and Publish
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check PKG_AUTH_TOKEN
+        env:
+          PKG_AUTH_TOKEN: ${{ secrets.PKG_AUTH_TOKEN }}
+        run: |
+          echo "PKG_AUTH_TOKEN is set to: $PKG_AUTH_TOKEN"
+
+      - name: Install dependencies
+        env:
+          PKG_AUTH_TOKEN: ${{ secrets.PKG_AUTH_TOKEN }}
+        run: npm install
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Check for existing tag
+        id: check_tag
+        run: |
+          if git fetch --tags && git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "Tag v${{ env.VERSION }} already exists. Failing the check."
+            exit 1
+          fi
+
+      - name: Check for existing release
+        id: check_release
+        run: |
+          if gh release view "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "Release v${{ env.VERSION }} already exists. Failing the check."
+            exit 1
+          fi
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check PKG_AUTH_TOKEN
+        env:
+          PKG_AUTH_TOKEN: ${{ secrets.PKG_AUTH_TOKEN }}
+        run: |
+          echo "PKG_AUTH_TOKEN is set"
+
+      - name: Install dependencies
+        env:
+          PKG_AUTH_TOKEN: ${{ secrets.PKG_AUTH_TOKEN }}
+        run: npm install
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Create Tag
+        run: |
+          git tag "v${{ env.VERSION }}"
+          git push origin "v${{ env.VERSION }}"
+          echo "Tag created: v${{ env.VERSION }}"
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+
+      - name: Create Release
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ env.VERSION }}" --title "Release v${{ env.VERSION }}" --notes "Release notes for version v${{ env.VERSION }}" --generate-notes
