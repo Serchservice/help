@@ -6,12 +6,12 @@ class AssetInstance {
      */
     get logo(): ILogoAsset {
         return {
-            squared: require("./logo/squared.png"),
-            tagBlack: require("./logo/tagBlack.png"),
-            tagWhite: require("./logo/tagWhite.png"),
-            black: require("./logo/black.png"),
-            white: require("./logo/white.png"),
-        }
+            squared: new URL('./logo/squared.png', import.meta.url).href,
+            tagBlack: new URL('./logo/tagBlack.png', import.meta.url).href,
+            tagWhite: new URL('./logo/tagWhite.png', import.meta.url).href,
+            black: new URL('./logo/black.png', import.meta.url).href,
+            white: new URL('./logo/white.png', import.meta.url).href,
+        };
     }
 
     /**
@@ -19,22 +19,18 @@ class AssetInstance {
      */
     get app(): IAppAsset {
         return {
-            user: require("./app/user.png"),
-            provider: require("./app/provider.png"),
-            business: require("./app/business.png"),
-        }
+            user: new URL('./app/user.png', import.meta.url).href,
+            provider: new URL('./app/provider.png', import.meta.url).href,
+            business: new URL('./app/business.png', import.meta.url).href,
+        };
     }
 
     /**
      * The Error Header Image
      */
     get error(): string {
-        return require('./common/error.jpg')
+        return new URL('./common/error.jpg', import.meta.url).href;
     }
-}
-
-const require = (image: string) => {
-    return new URL(image, import.meta.url).href
 }
 
 const Asset = new AssetInstance();
