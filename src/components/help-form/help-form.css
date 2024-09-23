@@ -1,0 +1,128 @@
+.help-form-container {
+    width: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    border: 2px dashed #030001;
+    border-radius: 20px;
+    padding: 10px;
+    transition: 0.5s
+}
+
+.help-form-form {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s
+}
+
+.help-form-full-name {
+    color: #030001;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.help-form-textinput {
+    width: 100%;
+    height: 50px;
+    transition: 0.3s;
+    padding: 12px;
+    border-color: #eeeeee;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.help-form-textinput:focus {
+    outline: none;
+    border-color: #030001;
+    border-width: 2px;
+}
+
+.help-form-email-address {
+    color: #030001;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.help-form-textinput1 {
+    width: 100%;
+    height: 50px;
+    transition: 0.3s;
+    padding: 12px;
+    border-color: #eeeeee;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.help-form-textinput1:focus {
+    outline: none;
+    border-color: #030001;
+    border-width: 2px;
+}
+
+.help-form-comment {
+    color: #030001;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.help-form-textarea {
+    width: 100%;
+    transition: 0.3s;
+    border-color: #eeeeee;
+    border-width: 1px;
+    border-radius: 10px;
+    resize: none;
+    padding: 12px;
+}
+
+.help-form-textarea:focus {
+    outline: none;
+    border-color: #030001;
+    border-width: 2px;
+}
+
+.help-form-button {
+    color: #ffffff;
+    width: auto;
+    padding: 14px;
+    margin-top: 40px;
+    border-radius: 10px;
+    background-color: #030001;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.help-form-container-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.help-form-container-header-icon {
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    background-color: #f4f4f4;
+}
+
+.help-form-button-text {
+    color: var(--dl-color-gray-white);
+    display: flex;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+}
+
+@media(max-width: 600px) {
+    .help-form-container {
+        width: 100%;
+    }
+}

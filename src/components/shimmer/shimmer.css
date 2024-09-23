@@ -1,0 +1,32 @@
+.shimmerContainer{
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmerBox{
+    background: linear-gradient(
+        to right,
+        #bdbdbd 0%,
+        #eeeeee 20%,
+        #fafafa 40%,
+        #eeeeee 60%,
+        #eeeeee 80%,
+        #bdbdbd 100%
+    );
+    background-size: 800%;
+    animation: shimmer 2s ease-in-out infinite;
+    /* position: absolute;
+    top: 5;
+    left: 0; */
+    width: 100%;
+}
+
+@keyframes shimmer {
+    0%{
+        background-position: -200px 0;
+    }
+
+    100%{
+        background-position: 200px 0;
+    }
+}
