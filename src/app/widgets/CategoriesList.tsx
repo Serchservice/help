@@ -71,7 +71,7 @@ const CategoriesList: React.FC<ModalProps> = observer(({ isOpen, handleClose}) =
         <Uikit.ActionDialog
             isOpen={isOpen}
             handleClose={handleClose}
-            height="100vh"
+            height="100%"
             width="100%"
             header="Help Categories"
             description="Pick the account you are seeking for help with"

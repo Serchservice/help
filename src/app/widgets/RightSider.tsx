@@ -24,7 +24,7 @@ const RightSider: React.FC = observer(() => {
                     <Uikit.SizedBox height={30} />
                     <Uikit.HoverLinkButton
                         value="Download"
-                        link=""
+                        link="https://www.serchservice.com/platform"
                         fontSize="14px"
                         centered
                         backgroundColor={Uikit.Theme.primaryDark}
@@ -133,7 +133,7 @@ export const SearchBox: React.FC<ModalProps> = observer(({ isOpen, handleClose})
         <Uikit.ActionDialog
             isOpen={isOpen}
             handleClose={handleClose}
-            height="100vh"
+            height="100%"
             width="100%"
             header="Quick Search"
             color={Uikit.Theme.secondary}
