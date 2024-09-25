@@ -1,7 +1,7 @@
 {
     "name": "help",
     "private": true,
-    "version": "2.1.24",
+    "version": "2.1.25",
     "type": "module",
     "proxy": "https://api.serchservice.com/",
     "description": "Help Center website for frequently asked questions",
@@ -25,7 +25,7 @@
     "dependencies": {
         "@fortawesome/free-brands-svg-icons": "^6.6.0",
         "@iconify/react": "^4.1.1",
-        "@serchservice/contently": "^1.12.745",
+        "@serchservice/contently": "^1.12.748",
         "@serchservice/web-ui-kit": "^1.1.89",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
