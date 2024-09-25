@@ -3,7 +3,7 @@ import { HelpGroup, HelpSection } from "@serchservice/contently";
 import * as Uikit from "@serchservice/web-ui-kit";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { contently } from "../../App";
 import Linked, { ILinkedItem } from "../../app/widgets/Linked";
 import RightSider from "../../app/widgets/RightSider";
@@ -131,7 +131,17 @@ const Section: React.FC<SectionProps> = observer(({ group }) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [elevation, setElevation] = React.useState<number>(2)
 
-    const handleClick = () => setIsOpen(!isOpen)
+    const shouldOpen = group.faqs && group.faqs.length > 0 && group.answer === undefined
+
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        if(shouldOpen) {
+            setIsOpen(!isOpen)
+        } else {
+            navigate(Routing.getRoute(Routing.instance.group, {category: category, section: section, group: group.group}))
+        }
+    }
 
     return (
         <Uikit.Container
@@ -147,11 +157,11 @@ const Section: React.FC<SectionProps> = observer(({ group }) => {
                 <Uikit.Expanded>
                     <Uikit.Text text={group.title} size={15} color={Uikit.Theme.primary} weight="bold" />
                 </Uikit.Expanded>
-                <Uikit.SizedBox width={30} />
-                <Uikit.ArrowButton onClick={handleClick} isUp={isOpen} color={Uikit.Theme.primary} />
+                {shouldOpen && (<Uikit.SizedBox width={30} />)}
+                {shouldOpen && (<Uikit.ArrowButton onClick={handleClick} isUp={isOpen} color={Uikit.Theme.primary} />)}
             </Uikit.Row>
             <Uikit.SizedBox height={20} />
-            {(group.faqs.length > 0 && isOpen) && group.faqs.map((faq, index) => {
+            {(shouldOpen && isOpen) && group.faqs?.map((faq, index) => {
                 return (
                     <Uikit.Step
                         content={
@@ -168,7 +178,7 @@ const Section: React.FC<SectionProps> = observer(({ group }) => {
                         }
                         color={Uikit.Theme.primary}
                         key={index}
-                        showBottom={group.faqs.length - 1 !== index}
+                        showBottom={group.faqs && group.faqs.length - 1 !== index}
                     />
                 )
             })}

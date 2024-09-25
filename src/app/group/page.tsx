@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react";
-import { HelpGroup, HelpSection } from "@serchservice/contently";
+import { ContentlyBuilder, HelpGroup, HelpSection } from "@serchservice/contently";
 import * as Uikit from "@serchservice/web-ui-kit";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { contently } from "../../App";
 import Linked, { ILinkedItem } from "../../app/widgets/Linked";
 import RightSider from "../../app/widgets/RightSider";
@@ -19,8 +19,9 @@ export const GroupRoute: RouteInterface = {
 
 export default function GroupPage() {
     const { isMobile } = Uikit.useDesign();
-    const { category, section } = useParams()
+    const { category, section, group } = useParams()
     const [activeSection, setActiveSection] = React.useState<HelpSection>()
+    const [activeGroup, setActiveGroup] = React.useState<HelpGroup>()
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
     React.useEffect(() => {
@@ -31,6 +32,9 @@ export default function GroupPage() {
 
             if(response) {
                 setActiveSection(response)
+                if(group) {
+                    setActiveGroup(response.groups.find((g => g.group)))
+                }
             }
         }
 
@@ -47,6 +51,13 @@ export default function GroupPage() {
             links.push({
                 link: Routing.getRoute(Routing.instance.category, {category: category}),
                 text: Uikit.Utility.capitalizeFirstLetter(category).replaceAll("-", " ").replaceAll("_", " "),
+            });
+        }
+
+        if (category && section) {
+            links.push({
+                link: Routing.getRoute(Routing.instance.section, {category: category, section: section}),
+                text: Uikit.Utility.capitalizeFirstLetter(section ?? "").replaceAll("-", " ").replaceAll("_", " "),
             });
         }
 
@@ -74,19 +85,28 @@ export default function GroupPage() {
                 </React.Fragment>
             )
         } else if(activeSection && activeSection.groups.length > 0) {
-            return (
-                <React.Fragment>
-                    <Uikit.SizedBox height={20} />
-                    {activeSection.groups.map((item, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                <Group response={item} />
-                                {activeSection.groups.length - 1 !== index && <Uikit.SizedBox height={10} />}
-                            </React.Fragment>
-                        )
-                    })}
-                </React.Fragment>
-            )
+            if(activeGroup && activeGroup.answer) {
+                return (
+                    <React.Fragment>
+                        <Uikit.SizedBox height={20} />
+                        <ContentlyBuilder content={activeGroup.answer} />
+                    </React.Fragment>
+                )
+            } else {
+                return (
+                    <React.Fragment>
+                        <Uikit.SizedBox height={20} />
+                        {activeSection.groups.map((item, index) => {
+                            return (
+                                <React.Fragment key={index}>
+                                    <Group response={item} />
+                                    {activeSection.groups.length - 1 !== index && <Uikit.SizedBox height={10} />}
+                                </React.Fragment>
+                            )
+                        })}
+                    </React.Fragment>
+                )
+            }
         } else {
             return (<SectionNotFound />)
         }
@@ -131,9 +151,19 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [elevation, setElevation] = React.useState<number>(2)
 
-    const handleClick = () => setIsOpen(!isOpen)
     const bgColor = group === response.group ? Uikit.Theme.primary : Uikit.Theme.secondary;
     const txtColor = group === response.group ? Uikit.Theme.secondary : Uikit.Theme.primary;
+    const shouldOpen = response.faqs && response.faqs.length > 0 && response.answer === undefined
+
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        if(shouldOpen) {
+            setIsOpen(!isOpen)
+        } else {
+            navigate(Routing.getRoute(Routing.instance.group, {category: category, section: section, group: response.group}))
+        }
+    }
 
     return (
         <Uikit.Container
@@ -150,11 +180,11 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
                 <Uikit.Expanded>
                     <Uikit.Text text={response.title} size={15} color={txtColor} weight="bold" />
                 </Uikit.Expanded>
-                <Uikit.SizedBox width={30} />
-                <Uikit.ArrowButton onClick={handleClick} isUp={isOpen} color={txtColor} />
+                {shouldOpen && (<Uikit.SizedBox width={30} />)}
+                {shouldOpen && (<Uikit.ArrowButton onClick={handleClick} isUp={isOpen} color={txtColor} />)}
             </Uikit.Row>
             <Uikit.SizedBox height={20} />
-            {(response.faqs.length > 0 && isOpen) && response.faqs.map((faq, index) => {
+            {(shouldOpen && isOpen && response.faqs) && response.faqs.map((faq, index) => {
                 return (
                     <Uikit.Step
                         content={
@@ -173,7 +203,7 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
                         }
                         color={txtColor}
                         key={index}
-                        showBottom={response.faqs.length - 1 !== index}
+                        showBottom={response.faqs && response.faqs.length - 1 !== index}
                     />
                 )
             })}
