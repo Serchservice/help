@@ -33,7 +33,7 @@ export default function GroupPage() {
             if(response) {
                 setActiveSection(response)
                 if(group) {
-                    setActiveGroup(response.groups.find((g => g.group)))
+                    setActiveGroup(response.groups.find((g => g.group == group)))
                 }
             }
         }
