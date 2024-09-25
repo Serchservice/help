@@ -3,7 +3,7 @@ import { ContentlyBuilder, HelpGroup, HelpSection } from "@serchservice/contentl
 import * as Uikit from "@serchservice/web-ui-kit";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { contently } from "../../App";
 import Linked, { ILinkedItem } from "../../app/widgets/Linked";
 import RightSider from "../../app/widgets/RightSider";
@@ -54,7 +54,7 @@ export default function GroupPage() {
             });
         }
 
-        if (group && activeGroup?.answer) {
+        if (category && section) {
             links.push({
                 link: Routing.getRoute(Routing.instance.section, {category: category, section: section}),
                 text: Uikit.Utility.capitalizeFirstLetter(section ?? "").replaceAll("-", " ").replaceAll("_", " "),
@@ -151,17 +151,19 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [elevation, setElevation] = React.useState<number>(2)
 
-    const handleClick = () => {
-        if(response.answer) {
-            Routing.getRoute(Routing.instance.group, {category: category, section: section, group: response.group})
-        } else {
-            setIsOpen(!isOpen)
-        }
-    }
-
     const bgColor = group === response.group ? Uikit.Theme.primary : Uikit.Theme.secondary;
     const txtColor = group === response.group ? Uikit.Theme.secondary : Uikit.Theme.primary;
-    const shouldOpen = response.faqs && response.faqs.length > 0
+    const shouldOpen = response.faqs && response.faqs.length > 0 && response.answer !== undefined
+
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        if(shouldOpen) {
+            setIsOpen(!isOpen)
+        } else {
+            navigate(Routing.getRoute(Routing.instance.group, {category: category, section: section, group: response.group}))
+        }
+    }
 
     return (
         <Uikit.Container
@@ -182,7 +184,7 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
                 {shouldOpen && (<Uikit.ArrowButton onClick={handleClick} isUp={isOpen} color={txtColor} />)}
             </Uikit.Row>
             <Uikit.SizedBox height={20} />
-            {(shouldOpen && isOpen) && response.faqs.map((faq, index) => {
+            {(shouldOpen && isOpen && response.faqs) && response.faqs.map((faq, index) => {
                 return (
                     <Uikit.Step
                         content={
@@ -201,7 +203,7 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
                         }
                         color={txtColor}
                         key={index}
-                        showBottom={response.faqs.length - 1 !== index}
+                        showBottom={response.faqs && response.faqs.length - 1 !== index}
                     />
                 )
             })}
