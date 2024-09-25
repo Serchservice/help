@@ -153,7 +153,7 @@ const Group: React.FC<GroupProps> = observer(({ response }) => {
 
     const bgColor = group === response.group ? Uikit.Theme.primary : Uikit.Theme.secondary;
     const txtColor = group === response.group ? Uikit.Theme.secondary : Uikit.Theme.primary;
-    const shouldOpen = response.faqs && response.faqs.length > 0 && response.answer !== undefined
+    const shouldOpen = response.faqs && response.faqs.length > 0 && response.answer === undefined
 
     const navigate = useNavigate()
 
